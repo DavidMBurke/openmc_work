@@ -1,0 +1,15 @@
+{
+    "name": "OpenMC Container",
+    "image": "openmc/openmc:latest",
+    "extensions": [
+      "ms-python.python"
+    ],
+    "settings": {
+      "python.pythonPath": "/usr/local/bin/python3"
+    },
+    "workspaceFolder": "/workspace",
+    "mounts": [
+      "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+    ]
+  }
+  

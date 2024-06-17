@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<model>
+  <materials>
+    <material id="1">
+      <density units="g/cm3" value="7.7"/>
+      <nuclide ao="0.05845" name="Fe54"/>
+      <nuclide ao="0.91754" name="Fe56"/>
+      <nuclide ao="0.02119" name="Fe57"/>
+      <nuclide ao="0.00282" name="Fe58"/>
+    </material>
+  </materials>
+  <geometry>
+    <cell id="1" material="1" region="-1" universe="1"/>
+    <surface boundary="vacuum" coeffs="0.0 0.0 0.0 500" id="1" type="sphere"/>
+  </geometry>
+  <settings>
+    <run_mode>fixed source</run_mode>
+    <particles>500</particles>
+    <batches>10</batches>
+    <inactive>0</inactive>
+    <source particle="neutron" strength="1.0" type="independent">
+      <energy type="discrete">
+        <parameters>14000000.0 1.0</parameters>
+      </energy>
+    </source>
+  </settings>
+  <tallies>
+    <tally id="1" name="RR">
+      <nuclides>Fe54 Fe56 Fe57 Fe58</nuclides>
+      <scores>(n,2nd) (n,2n) (n,3n) (n,na) (n,n3a) (n,2na) (n,3na) (n,np) (n,n2a) (n,2n2a) (n,nd) (n,nt) (n,n3He) (n,nd2a) (n,nt2a) (n,4n) (n,2np) (n,3np) (n,n2p) (n,npa) (n,gamma) (n,p) (n,d) (n,t) (n,3He) (n,a) (n,2a) (n,3a) (n,2p) (n,pa) (n,t2a) (n,d2a) (n,pd) (n,pt) (n,da) (n,5n) (n,6n) (n,2nt) (n,ta) (n,4np) (n,3nd) (n,nda) (n,2npa) (n,7n) (n,8n) (n,5np) (n,6np) (n,7np) (n,4na) (n,5na) (n,6na) (n,7na) (n,4nd) (n,5nd) (n,6nd) (n,3nt) (n,4nt) (n,5nt) (n,6nt) (n,2n3He) (n,3n3He) (n,4n3He) (n,3n2p) (n,3n2a) (n,3npa) (n,dt) (n,npd) (n,npt) (n,ndt) (n,np3He) (n,nd3He) (n,nt3He) (n,nta) (n,2n2p) (n,p3He) (n,d3He) (n,3Hea) (n,4n2p) (n,4n2a) (n,4npa) (n,3p) (n,n3p) (n,3n2pa) (n,5n2p)</scores>
+    </tally>
+  </tallies>
+</model>

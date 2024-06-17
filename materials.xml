@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<materials>
+  <material depletable="true" id="1" volume="164749.30754445354">
+    <density units="g/cm3" value="6.1"/>
+    <nuclide ao="0.0025" name="V50"/>
+    <nuclide ao="0.9975" name="V51"/>
+  </material>
+</materials>
