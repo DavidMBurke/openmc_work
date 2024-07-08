@@ -1,4 +1,6 @@
 import openmc
+import matplotlib.pyplot as plt
+import numpy as np
 
 def convert_time_units(time):
     if time > 24 * 365:
@@ -138,12 +140,46 @@ def get_waste_class(slc_a, slc_b, slc_c, llc): #short and long lived concentrati
     if llc > 1:
         waste_class = "Not generally acceptable for near-surface disposal."
     print(f"Long lived concentration: {llc}")
-    
-def make_flux_file(statepoint_file, name):
-    with open("fluxes", 'w') as file:
+    return waste_class
+
+def get_flux_values(statepoint_file):
         sp = openmc.StatePoint(statepoint_file)
         flux_values = sp.get_tally(name='ccfe_tally').get_values(scores=['flux'])
         sp.close()
+        flux_values_flattened = []
+        for sublist in flux_values:
+            for subsublist in sublist:
+                flux_values_flattened.append(subsublist.item())
+        return flux_values_flattened
+    
+def make_flux_file(flux_values, name):
+    with open("fluxes", 'w') as file:
         for flux in reversed(flux_values):
-            print(f"{flux[0].item():.18e}", file = file)
+            print(f"{flux:.18e}", file = file)
         print(name, file = file)
+        
+def plot_flux_histogram(flux_values):
+    flux_bins = openmc.EnergyFilter.from_group_structure('CCFE-709').values
+    bin_widths = np.diff(flux_bins)
+
+    # Compute the histogram
+    counts, _ = np.histogram(flux_values, bins=flux_bins)
+
+    # Normalize the counts by the bin widths
+    counts = counts / bin_widths
+
+    # Define the x positions for each bar (equal spacing)
+    x_positions = np.arange(len(counts))
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(x_positions, counts, width=1.0, edgecolor='black')
+    plt.title('Flux Histogram')
+    plt.xlabel('Energy (eV)')
+    plt.ylabel('Normalized Frequency')
+    plt.grid(True)
+    
+    # Set custom ticks and labels with scientific notation
+    labels = [f"{x:.2e}" for x in flux_bins[::25]]
+    plt.xticks(x_positions[::25], labels=labels, rotation=90)
+    
+    plt.show()
